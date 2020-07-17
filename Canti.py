@@ -22,9 +22,9 @@ class CantileverBeam(Sofa.PythonScriptController):
 		cube.createObject('FixedConstraint', indices="@FixedROI.indices")
 		self.ff = cube.createObject('ConstantForceField', force= force, indices='1')
 
-		visuNode = cube.createChild('visual')
-		visuNode.createObject('OglModel', name='visual')
-	  	visuNode.createObject('IdentityMapping')
+		# visuNode = cube.createChild('visual')
+		# visuNode.createObject('OglModel', name='visual')
+	 #  	visuNode.createObject('IdentityMapping')
 
 	def onEndAnimationStep(self, dt):
 		#print(self.dofs.position[0][self.node_name])
@@ -39,8 +39,11 @@ class CantileverBeam(Sofa.PythonScriptController):
 		
 		if self.node_name == n_total -1:
 			print('And the stored values are ')
+			#print(self.store)
 			print(self.store)
-			print( self.store.shape)
+			self.store = self.store - self.store[0]
+			print(self.store)
+
 			self.store = self.store.reshape(n_total*12096,1)
 			f_value = np.zeros((self.store.shape[0],self.store.shape[1]))
 			
@@ -61,7 +64,7 @@ def createScene(rootNode):
 	rootNode.createObject('DefaultAnimationLoop')
 	rootNode.createObject('DefaultVisualManagerLoop')
 	rootNode.gravity = '0 0 0'
-	rootNode.createObject('StaticSolver',name='static_beam', newton_iterations=20)
+	rootNode.createObject('StaticSolver',name='static_beam', newton_iterations=10)
 	#rootNode.createObject('EulerImplicitSolver',name='cg_odesolver',printLog='false')
 	rootNode.createObject('CGLinearSolver',name='linear solver',iterations=100,tolerance=1.0e-9,threshold=1.0e-9)
 	force = np.linspace(0,10,3) #same above
