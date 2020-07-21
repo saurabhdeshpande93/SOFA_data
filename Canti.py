@@ -49,7 +49,7 @@ class CantileverBeam(Sofa.PythonScriptController):
 			self.store = self.store.reshape(self.n_total*12096,1)
 			f_value = np.zeros((self.store.shape[0],self.store.shape[1]))
 			
-			f = np.linspace(0,10,1000) #same as the input force 
+			f = np.linspace(0,10,2) #same as the input force 
 
 			for i in range(self.n_total):
 				f_value[12096*i] = f[i]
@@ -71,7 +71,7 @@ def createScene(rootNode):
 	rootNode.createObject('StaticSolver',name='static_beam', newton_iterations=10)
 	#rootNode.createObject('EulerImplicitSolver',name='cg_odesolver',printLog='false')
 	rootNode.createObject('CGLinearSolver',name='linear solver',iterations=100,tolerance=1.0e-9,threshold=1.0e-9)
-	force = np.linspace(0,10,1000) #same above
+	force = np.linspace(0,10,2) #same above
 	n_total = len(force)
 	#force = [-5,5,5]
 	store = []

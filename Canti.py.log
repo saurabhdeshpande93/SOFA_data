@@ -2,3 +2,10 @@
 --- NEW SESSION: 16/07/2020 18:20:42 ---
 /-2/dofs.showIndices = 1
 /-2/dofs.showIndices = 0
+
+--- NEW SESSION: 21/07/2020 17:58:23 ---
+/static_beam.correction_tolerance_threshold = -1.05999
+
+--- NEW SESSION: 21/07/2020 18:00:14 ---
+/static_beam.correction_tolerance_threshold = -0.56999
+/static_beam.residual_tolerance_threshold = -1.07999
