@@ -12,11 +12,13 @@ class CantileverBeam(Sofa.PythonScriptController):
 
 	def __init__(self, node, name, node_name, commandLineArguments):
 		#self.force= [0,float(commandLineArguments[1]),0]
-		self.force = [0.0,5.0,0.0]
+		self.force = [0.0,9.9919984,0.0]
 		self.node = node
 		self.name = name
 		self.node_name = node_name
 		self.createGraph(self.node, self.node_name, self.force)
+
+	
 
 	def bwdInitGraph(self,node):
 		print("bwdinit")
@@ -25,7 +27,7 @@ class CantileverBeam(Sofa.PythonScriptController):
 
 		#Input the external deformation matrix 
 
-		df = pd.read_csv('Data/test_topology.csv', names=['f', 'u'], header = None)
+		df = pd.read_csv('Data/single_pred.csv', names=['f', 'u'], header = None)
 		deforms = df['u'].values
 
 		new_position = init_position + deforms
@@ -47,8 +49,18 @@ class CantileverBeam(Sofa.PythonScriptController):
 
 		visuNode = self.nn_node.createChild('visu')
 		visuNode.createObject('OglModel', name='visual', position = "@topology_nn.position", quads = "@topology_nn.quads")
-		# visuNode.createObject('IdentityMapping')
+		#visuNode.createObject('IdentityMapping')
 
+		# df_step = pd.read_csv('Data/first_step.csv', names=['f', 'u'], header = None)
+		# step_one = df['u'].values
+
+		# self.step_node = self.cube.createChild('step_node')
+		# self.step_topology = self.nn_node.createObject('MeshTopology', name = 'topology_nn', position = step_one.tolist(), quads ='@../topology.quads' )
+		# # self.nn_node.createObject('MechanicalObject', template = "Vec3d", name = "dofs", position = "@topology_nn.position")
+
+		# visuNode = self.nn_node.createChild('visu')
+		# visuNode.createObject('OglModel', name='visual', position = "@topology_nn.position", quads = "@topology_nn.quads")
+		# #visuNode.createObject('IdentityMapping')
 
 
 
@@ -66,15 +78,17 @@ class CantileverBeam(Sofa.PythonScriptController):
 		#self.nn_position = cube.createObject('MeshTopology', name = 'topology', src="@loader")
 		
 	def onEndAnimationStep(self, dt):
-		pass
+		
 		#print(self.dofs.position[0][self.node_name])
 		#print('Force = ', self.ff.force)
 		#print(commandLineArguments)
+		pass
+
+		# first_step = np.array(self.dofs.position)
+		# np.savetxt("Data/first_step.csv",first_step,delimiter=",")
 
 
 	
-		# # self.store.append(self.dofs.position)
-		# store = np.array(self.dofs.position)
 		# init_position = np.array(self.dofs.rest_position)
 
 		# if self.node_name == self.n_total -1:
