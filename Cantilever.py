@@ -7,14 +7,15 @@ class CantileverBeam(Sofa.PythonScriptController):
 
 	def createGraph(self, rootNode, node_name,force):
 		cube = rootNode.createChild(str(node_name))
-		cube.createObject('MeshGmshLoader', name="loader", filename="./cantilever.msh" )
+		cube.createObject('MeshGmshLoader', name="loader", filename="./cantilever_4m.msh" )
 		cube.createObject('MeshTopology', name = 'topology', src="@loader")
 		self.dofs = cube.createObject('MechanicalObject', name="dofs", template='Vec3d')
 		cube.createObject('UniformMass', name = 'mass', totalMass=1)
-		cube.createObject('HexahedronFEMForceField',youngModulus="100000",poissonRatio="0.3")
-		cube.createObject('BoxROI', box="-0.51 -0.1 0 -0.5 0.1 0.2", position="@topology.position", name="FixedROI", drawBoxes='1')
+		cube.createObject('HexahedronFEMForceField',youngModulus="500",poissonRatio="0.4")
+		cube.createObject('BoxROI', box="-2.1 -0.5 0 -1.99 0.5 1", position="@topology.position", name="FixedROI", drawBoxes='1')
+		self.topROI = cube.createObject('BoxROI', box=" 1.0 0.49 0.01 1.99 0.51 0.99", position="@topology.position", name="topROI", drawBoxes='1')
 		cube.createObject('FixedConstraint', indices="@FixedROI.indices")
-		self.ff = cube.createObject('ConstantForceField', force= force, indices='1')
+		self.ff = cube.createObject('ConstantForceField', force= force, indices='1015')
 
 
 
@@ -23,7 +24,10 @@ class CantileverBeam(Sofa.PythonScriptController):
 	  	visuNode.createObject('IdentityMapping')
 
 	def onEndAnimationStep(self, dt):
-		print(self.dofs.position[0])
+		print(self.topROI.indices)
+		qtnodes = np.array(self.topROI.indices)
+		qtnodes = [ int(x) for x in qtnodes]
+		np.savetxt("qt_nodes.csv", qtnodes)
 
 		#print(self.ff.ConstantForceField)
 
@@ -46,10 +50,10 @@ def createScene(rootNode):
 
 	#rootNode.createObject('EulerImplicitSolver',name='cg_odesolver',printLog='false')
 	rootNode.createObject('CGLinearSolver',name='linear solver',iterations=100,tolerance=1.0e-9,threshold=1.0e-9)
-	force = np.linspace(-10,10,3)
+	force = [2.0] #np.linspace(-10,10,3)
 
 	for i in force:
 		print('Position when force value is ' + str(i))
-		controller = CantileverBeam(rootNode,i, [0,i,0])
+		controller = CantileverBeam(rootNode,i, [np.random.uniform(-4.0,4.0),np.random.uniform(-4.0,4.0),np.random.uniform(-4.0,4.0)])
 		# controller.ff.force = [0,i,0]
 

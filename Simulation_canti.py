@@ -12,6 +12,7 @@ class CantileverBeam(Sofa.PythonScriptController):
 
 	def __init__(self, node, name, node_name, commandLineArguments):
 		self.force= [0,float(commandLineArguments[1]),0]
+		#self.force = [0.0,5.0,0.0]
 		self.node = node
 		self.name = name
 		self.node_name = node_name
@@ -51,7 +52,7 @@ class CantileverBeam(Sofa.PythonScriptController):
 		store = store.reshape(12096,1)
 		f_value = np.zeros((store.shape[0],store.shape[1]))
 		
-		f_value[1] = self.force[1] #same as the input force 
+		f_value[4] = self.force[1] #same as the input force 
 
 		# for i in range(self.n_total):
 		# 	f_value[12096*i] = f[i]
@@ -65,8 +66,8 @@ class CantileverBeam(Sofa.PythonScriptController):
 		#for saving underformed
 		#np.savetxt("Data/undeformed.csv", init_position, delimiter=",")
 
-		# with open('Data/undeformed.csv', 'a') as f:
-  #   			df.to_csv(f, sep = ',', header = False ,index=False)
+		with open('Data/test_topology.csv', 'a') as f:
+    			df.to_csv(f, sep = ',', header = False ,index=False)
 		
 		# with open('Data/SOFA_data_test10.csv','a') as fd:
   #   			fd.write(data)

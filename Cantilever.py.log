@@ -5,3 +5,21 @@
 --- NEW SESSION: 14/07/2020 16:24:02 ---
 /cube/ConstantForceField.showColor = 0.2 0.898039 0.298039 1
 /cube/ConstantForceField.showColor = 0.2 0.898039 0.298039 1
+
+--- NEW SESSION: 08/09/2020 16:14:49 ---
+/2.0/dofs.showIndices = 1
+
+--- NEW SESSION: 08/09/2020 17:07:20 ---
+/2.0/dofs.showIndices = 1
+/2.0/dofs.showIndices = 1
+/2.0/dofs.showIndices = 1
+
+--- NEW SESSION: 17/09/2020 14:45:49 ---
+/2.0/dofs.showIndices = 1
+/2.0/dofs.showIndicesScale = 0.002
+/2.0/dofs.showIndices = 1
+/2.0/dofs.showIndicesScale = 0.009
+
+--- NEW SESSION: 17/09/2020 15:02:47 ---
+/2.0/dofs.showIndices = 1
+/2.0/dofs.showIndicesScale = 0.01

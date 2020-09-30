@@ -30,16 +30,19 @@ import pandas as pd
 
 #Or we can generate forces in random directions 
 
-df = pd.read_csv('topnodes.csv', names=['u'], header = None)
+df = pd.read_csv('qt_nodes.csv', names=['u'], header = None)
 topnodes= df['u'].values
 
-
-m = 100 #number of training example generated at a particular node 
+#Let's convert all elements of array to integers to be given as force indices 
+topnodes = [ int(x) for x in topnodes]
+#print(topnodes)
+#print("Length of array is", len(topnodes))
+#number of training example generated at a particular node 
+m = 450
 
 #Index on which forces are applied on this node numbers 
-#index = np.array([0])
-
 index = topnodes
+
 #index = np.array([0,1,70,71,72,73,74,75,76,77,78,79])
 
 
